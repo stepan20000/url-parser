@@ -1,7 +1,7 @@
 import {PortalParsedRoute} from './portal-parsed-route.model';
 import {PortalRoute} from './portal-route.model';
 
-export const parseTabRoute = (route: PortalRoute, url: string, tab: string): PortalParsedRoute => {
+export const parseTabRoute = (route: PortalRoute, tab: string): PortalParsedRoute => {
   const parsedRoute = new PortalParsedRoute();
 
   parsedRoute.path = route.path;

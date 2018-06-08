@@ -3,6 +3,8 @@ import { PortalParsedRoute } from './portal-parsed-route.model';
 import Path from 'path-parser';
 import * as _ from 'lodash';
 import {parseTabRoute} from "./parse-tab-route";
+import {parseRoute} from "./parse-route";
+import {parseParamsRoute} from "./parse-params-route";
 
 // process routes object was obtained from json file so that we can use path-parser
 const processRoutes = (globalRoute: PortalRoute, baseUrl?: string) => {
@@ -42,39 +44,39 @@ const getParsedRoute = (route: PortalRoute, url: string): PortalParsedRoute => {
   const isTabRoute = !!urlMatchRoute.tab;
 
   if (isTabRoute) {
-    return parseTabRoute(route, url, urlMatchRoute.tab);
+    return parseTabRoute(route, urlMatchRoute.tab);
   }
 
   const isParamRoute = !_.isEmpty(urlMatchRoute);
 
   if (isParamRoute) {
-    return parseTabRoute(route, url, urlMatchRoute);
+    return parseParamsRoute(route, urlMatchRoute);
   }
 
-  return
+  return parseRoute(route);
 
-  const parsedRoute = new PortalParsedRoute();
-  parsedRoute.path = route.path;
-  parsedRoute.classPath = route.classPath;
-  // TODO: set correct options here
-  parsedRoute.options = null;
-
-  parsedRoute.values = urlMatchRoute;
-  if (parsedRoute.values.tab) {
-    parsedRoute.tab = parsedRoute.values.tab;
-    parsedRoute.values = {};
-  }
-  parsedRoute.roles = route.roles ? route.roles : null;
-
-  if (_.isEmpty(urlMatchRoute)) {
-    parsedRoute.source = parsedRoute.path;
-  } else {
-    parsedRoute.source = parsedRoute.path.split('/{')[0] + Object.keys(urlMatchRoute).reduce((acc, key) => {
-      return acc + '/' + String(urlMatchRoute[key]);
-    }, '');
-  }
-
-  return parsedRoute;
+  // const parsedRoute = new PortalParsedRoute();
+  // parsedRoute.path = route.path;
+  // parsedRoute.classPath = route.classPath;
+  // // TODO: set correct options here
+  // parsedRoute.options = null;
+  //
+  // parsedRoute.values = urlMatchRoute;
+  // if (parsedRoute.values.tab) {
+  //   parsedRoute.tab = parsedRoute.values.tab;
+  //   parsedRoute.values = {};
+  // }
+  // parsedRoute.roles = route.roles ? route.roles : null;
+  //
+  // if (_.isEmpty(urlMatchRoute)) {
+  //   parsedRoute.source = parsedRoute.path;
+  // } else {
+  //   parsedRoute.source = parsedRoute.path.split('/{')[0] + Object.keys(urlMatchRoute).reduce((acc, key) => {
+  //     return acc + '/' + String(urlMatchRoute[key]);
+  //   }, '');
+  // }
+  //
+  // return parsedRoute;
 };
 
 const getParsedRoutes = (globalRoute: PortalRoute, url: string ): PortalParsedRoute[] => {
