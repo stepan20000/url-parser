@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
+    "lodash": "^4.17.10",
+    "path-parser": "^4.1.1",
     "rxjs": "^6.0.0",
     "url-pattern": "^1.0.3",
     "zone.js": "^0.8.26"

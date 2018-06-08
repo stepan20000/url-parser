@@ -1,0 +1,245 @@
+{
+  "path": "orgID",
+  "classPath": "goldtier/js/controllers/AppController",
+  "outlet": "app",
+  "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"],
+  "children": [{
+    "path": "onepass",
+    "outlet": "orgIDmain",
+    "classPath": "goldtier/js/controllers/OnepassController"
+  },
+
+    {
+      "path": "goldtierLogin",
+      "outlet": "orgIDmain",
+      "classPath": "goldtier/js/controllers/LoginController"
+    },
+
+    {
+      "path": "login",
+      "outlet": "orgIDmain",
+      "classPath": "goldtier/js/controllers/LoginController"
+    },
+
+    {
+      "path": "logout",
+      "outlet": "orgIDmain",
+      "classPath": "goldtier/js/controllers/LogoutController",
+      "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"]
+    },
+
+    {
+      "path": "main",
+      "outlet": "orgIDmain",
+      "classPath": "goldtier/js/controllers/MainController",
+      "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"],
+      "children": [
+        {
+          "path": "status",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/StatusController",
+          "roles": ["ADMIN"]
+        },
+
+        {
+          "path": "contact",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/ContactController",
+          "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"]
+        },
+
+        {
+          "path": "analytics",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/AnalyticsController",
+          "roles": ["ADMIN"]
+        },
+
+        {
+          "path": "selection/{selectionId}",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/DynamicSelectionController",
+          "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN"]
+        },
+
+        {
+          "path": "legal-entity-profile",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/SelectionDrivenController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+          "children": [{
+            "path": "form/{type}/{formId}",
+            "outlet": "orgIDdetail",
+            "classPath": "goldtier/js/controllers/DynamicFormController",
+            "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+            "children": [{
+              "path": "[tabs]",
+              "outlet": "orgIDdetail",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"]
+            }]
+          }]
+        },
+
+        {
+          "path": "end-client-records",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/SelectionDrivenController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+          "children": [{
+            "path": "form/{type}/{formId}",
+            "outlet": "orgIDdetail",
+            "classPath": "goldtier/js/controllers/DynamicFormController",
+            "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+            "children": [{
+              "path": "[tabs]",
+              "outlet": "orgIDdetail",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"]
+            }]
+          }]
+        },
+
+        {
+          "path": "my-documents",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/DocumentsController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"],
+          "options": {
+            "title": "My Documents",
+            "selections": [[346773226, "search"], [203521923, "list", true]]
+          }
+        },
+
+        {
+          "path": "received-documents",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/DocumentsController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"],
+          "options": {
+            "title": "Received Documents",
+            "hint": "View your received documents.",
+            "selections": [[649239295, "list"], [440046176, "list", true], [361902438, "list", true]]
+          }
+        },
+
+        {
+          "path": "my-funds",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/DocumentsController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"],
+          "options": {
+            "title": "My Funds",
+            "selections": [[132233224, "search"], [738926370, "list", false], [432195257, "list", false]]
+          }
+        },
+
+        {
+          "path": "search/{selectionId}",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/SearchDrivenController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"],
+          "children": [
+            {
+              "path": "results/{mode}",
+              "outlet": "orgIDdetail",
+              "classPath": "goldtier/js/controllers/DynamicSelectionController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN", "FI_DOC_EXCHANGE"]
+            }
+          ]
+        },
+
+        {
+          "path": "manage-users",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/SelectionDrivenController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+          "children": [{
+            "path": "form/{type}/{formId}",
+            "outlet": "orgIDdetail",
+            "classPath": "goldtier/js/controllers/DynamicFormController",
+            "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+            "children": [{
+              "path": "[tabs]",
+              "outlet": "orgIDdetail",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"]
+            }]
+          }]
+        },
+
+        {
+          "path": "invitations",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/SelectionDrivenController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+          "children": [{
+            "path": "form/{type}/{formId}",
+            "outlet": "orgIDdetail",
+            "classPath": "goldtier/js/controllers/DynamicFormController",
+            "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+            "children": [{
+              "path": "[tabs]",
+              "outlet": "orgIDdetail",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"]
+            }]
+          }]
+        },
+
+        {
+          "path": "task-checklist/{domainType}/{domainKey}",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/SelectionMasterDetailController",
+          "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+          "options": {
+            "mode": "tree"
+          },
+          "children": [{
+            "path": "form/{type}/{formId}",
+            "outlet": "orgIDdetail",
+            "classPath": "goldtier/js/controllers/DynamicFormController",
+            "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"],
+            "children": [{
+              "path": "[tabs]",
+              "outlet": "orgIDdetail",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"]
+            }]
+          }]
+        },
+
+        {
+          "path": "form/{type}/{formId}",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/DynamicFormController",
+          "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN"],
+          "children" : [{
+            "path": "df_param/{DF_PARAM}",
+            "outlet": "orgIDcontent",
+            "classPath": "goldtier/js/controllers/DynamicFormController",
+            "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN"],
+            "children": [{
+              "path": "[tabs]",
+              "outlet": "orgIDcontent",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "END_CLIENT", "END_CLIENT_ADMIN", "FI_SALES", "FI_OPS", "FI_ADMIN"]
+            }]
+          },
+            {
+              "path": "[tabs]",
+              "outlet": "orgIDcontent",
+              "classPath": "goldtier/js/controllers/DynamicFormController",
+              "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN"]
+            }]
+        },
+
+        {
+          "path": "dashboard",
+          "outlet": "orgIDcontent",
+          "classPath": "goldtier/js/controllers/DashboardController",
+          "roles": ["ADMIN", "FI_SALES", "END_CLIENT", "END_CLIENT_ADMIN", "FI_OPS", "FI_ADMIN"]
+        }
+      ]
+    }]
+}

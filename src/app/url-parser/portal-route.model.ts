@@ -1,10 +1,9 @@
-import UrlPattern = require('url-pattern');
+import Path from 'path-parser';
 
 export class PortalRoute {
   public path: string;
-  public paramPath: string;
   public classPath: string;
-  public urlPattern: UrlPattern;
+  public urlPattern: Path;
   public roles?: string[];
   public children?: PortalRoute[];
 }
