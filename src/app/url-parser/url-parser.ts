@@ -1,13 +1,12 @@
 import { PortalRoute } from './portal-route.model';
 import { PortalParsedRoute } from './portal-parsed-route.model';
 import Path from 'path-parser';
-import _ from 'lodash';
-
-declare function require(url: string);
-const rawRoutes: PortalRoute  = require('./routes.json');
+import * as _ from 'lodash';
+import {parseTabRoute} from "./parse-tab-route";
 
 // process routes object was obtained from json file so that we can use path-parser
 const processRoutes = (globalRoute: PortalRoute, baseUrl?: string) => {
+
   baseUrl = baseUrl ? baseUrl + '/' : '';
   let paramPath: string;
 
@@ -15,11 +14,14 @@ const processRoutes = (globalRoute: PortalRoute, baseUrl?: string) => {
     globalRoute.path = '';
     // remove '/' from the end of url so that it pass Path.partialTest
     // and this route will be include to the results array
-    paramPath = baseUrl.slice(0, baseUrl.length - 1);
+    console.log('baseUrl in ===[tab]', baseUrl);
+
+    paramPath = baseUrl + ':tab';
   } else {
     paramPath = baseUrl + globalRoute.path.replace(/\/{/g, '/:')
     .replace(/\/{/g, '/')
-    .replace(/}/g, '');
+    .replace(/}/g, '')
+    .replace(/\/\[tabs\]/g, '/:tab');
   }
 
   globalRoute.urlPattern = new Path(paramPath);
@@ -31,14 +33,25 @@ const processRoutes = (globalRoute: PortalRoute, baseUrl?: string) => {
   return globalRoute;
 };
 
-const rootRoute = processRoutes(rawRoutes);
-
 const getParsedRoute = (route: PortalRoute, url: string): PortalParsedRoute => {
-  const urlMatchRoute = route.urlPattern.partialTest(url);
+  const urlMatchRoute: any = route.urlPattern.partialTest(url);
 
   if (!urlMatchRoute) {
     return null;
   }
+  const isTabRoute = !!urlMatchRoute.tab;
+
+  if (isTabRoute) {
+    return parseTabRoute(route, url, urlMatchRoute.tab);
+  }
+
+  const isParamRoute = !_.isEmpty(urlMatchRoute);
+
+  if (isParamRoute) {
+    return parseTabRoute(route, url, urlMatchRoute);
+  }
+
+  return
 
   const parsedRoute = new PortalParsedRoute();
   parsedRoute.path = route.path;
@@ -47,13 +60,17 @@ const getParsedRoute = (route: PortalRoute, url: string): PortalParsedRoute => {
   parsedRoute.options = null;
 
   parsedRoute.values = urlMatchRoute;
+  if (parsedRoute.values.tab) {
+    parsedRoute.tab = parsedRoute.values.tab;
+    parsedRoute.values = {};
+  }
   parsedRoute.roles = route.roles ? route.roles : null;
 
   if (_.isEmpty(urlMatchRoute)) {
     parsedRoute.source = parsedRoute.path;
   } else {
-    parsedRoute.source = Object.keys(urlMatchRoute).reduce((acc, key) => {
-      return acc + String(key) + '/' + String(urlMatchRoute[key]);
+    parsedRoute.source = parsedRoute.path.split('/{')[0] + Object.keys(urlMatchRoute).reduce((acc, key) => {
+      return acc + '/' + String(urlMatchRoute[key]);
     }, '');
   }
 
@@ -85,10 +102,17 @@ const getParsedRoutes = (globalRoute: PortalRoute, url: string ): PortalParsedRo
 };
 
 
-export const urlParser = (url: string): PortalParsedRoute[] => {
-  const spaUrl = url.split('#')[1];
+export const urlParser = (routes, url: string): PortalParsedRoute[] => {
+//  try {
+    const spaUrl = url.split('#')[1];
+    const rootRoute = processRoutes(routes);
 
-  return getParsedRoutes(rootRoute, spaUrl);
+    console.log('rootRoute', rootRoute);
+    return spaUrl ? getParsedRoutes(rootRoute, spaUrl) : [];
+  // } catch {
+  //   console.log('in catch');
+  //   return [];
+ // }
 };
 
 

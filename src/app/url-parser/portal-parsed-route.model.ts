@@ -5,4 +5,5 @@ export class PortalParsedRoute {
   public options: any;
   public values?: any;
   public roles?: string[];
+  public tab?: string;
 }
